@@ -1,0 +1,108 @@
+import os
+
+class Film:
+    def __init__(self, id, judul, durasi, genre, rating):
+        self.id = id
+        self.judul = judul
+        self.durasi = durasi
+        self.genre = genre
+        self.rating = rating
+
+    def __str__(self):
+        return f"{self.id}. {self.judul} - {self.durasi} menit - {self.genre} - Rating: {self.rating}"
+
+class Bioskop:
+    def __init__(self):
+        self.daftar_film = {}
+
+    def tambah_film(self, film):
+        if film.id not in self.daftar_film:
+            self.daftar_film[film.id] = film
+            print(f"Film '{film.judul}' berhasil ditambahkan.")
+        else:
+            print(f"Film dengan ID {film.id} sudah ada.")
+
+    def lihat_film(self):
+        if self.daftar_film:
+            for film in self.daftar_film.values():
+                print(film)
+        else:
+            print("Tidak ada film yang tersedia.")
+
+    def ubah_film(self, id, judul=None, durasi=None, genre=None, rating=None):
+        if id in self.daftar_film:
+            film = self.daftar_film[id]
+            if judul:
+                film.judul = judul
+            if durasi:
+                film.durasi = durasi
+            if genre:
+                film.genre = genre
+            if rating:
+                film.rating = rating
+            print(f"Film dengan ID {film.id} berhasil diubah.")
+        else:
+            print(f"Film dengan ID {id} tidak ditemukan.")
+
+    def hapus_film(self, id):
+        if id in self.daftar_film:
+            del self.daftar_film[id]
+            print(f"Film dengan ID {id} berhasil dihapus.")
+        else:
+            print(f"Film dengan ID {id} tidak ditemukan.")
+
+def main():
+    os.system("cls")
+    bioskop = Bioskop()
+    film1 = Film("1", "Joker", 122, "Thriller", 9)
+    film2 = Film("2", "Avengers: Endgame", 181, "Aksi", 8.4)
+    film3 = Film("3", "The Lion King", 118, "Animasi", 8.8)
+
+    bioskop.tambah_film(film1)
+    bioskop.tambah_film(film2)
+    bioskop.tambah_film(film3)
+
+    while True:
+        os.system("cls")
+        print("╭─────Pilihan Menu─────╮")
+        print("     1. Tambah film")
+        print("     2. Lihat film")
+        print("     3. Ubah film")
+        print("     4. Hapus film")
+        print("     5. Keluar")
+        print("╰──────────────────────╯")
+
+        pilihan = input("Masukkan pilihan Anda: ")
+
+        if pilihan == "1":
+            id_film = input("Masukkan ID film: ")
+            judul = input("Masukkan judul film: ")
+            durasi = int(input("Masukkan durasi film (menit): "))
+            genre = input("Masukkan genre film: ")
+            rating = float(input("Masukkan rating film: "))
+            film_baru = Film(id_film, judul, durasi, genre, rating)
+            bioskop.tambah_film(film_baru)
+            os.system("pause")
+        elif pilihan == "2":
+            bioskop.lihat_film()
+            os.system("pause")
+        elif pilihan == "3":
+            id_film = input("Masukkan ID film yang ingin diubah: ")
+            judul = input("Masukkan judul baru : ")
+            durasi = int(input("Masukkan durasi baru : "))
+            genre = input("Masukkan genre baru : ")
+            rating = float(input("Masukkan rating baru : "))
+            bioskop.ubah_film(id_film, judul, durasi, genre, rating)
+            os.system("pause")
+        elif pilihan == "4":
+            id_film = input("Masukkan ID film yang ingin dihapus: ")
+            bioskop.hapus_film(id_film)
+            os.system("pause")
+        elif pilihan == "5":
+            print("Terima kasih telah menggunakan program ini.")
+            break
+        else:
+            print("Pilihan tidak valid. Silakan coba lagi.")
+
+if __name__ == "__main__":
+    main()

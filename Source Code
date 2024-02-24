@@ -1,5 +1,4 @@
 import os
-
 class Film:
     def __init__(self, id, judul, durasi, genre, rating):
         self.id = id
@@ -54,13 +53,15 @@ class Bioskop:
 def main():
     os.system("cls")
     bioskop = Bioskop()
-    film1 = Film("1", "Joker", 122, "Thriller", 9)
-    film2 = Film("2", "Avengers: Endgame", 181, "Aksi", 8.4)
-    film3 = Film("3", "The Lion King", 118, "Animasi", 8.8)
+    film1 = Film("1", "Spider-Man: No Way Home", 148, "laga/Fiksi/Aksi", 8.2)
+    film2 = Film("2", "Avengers: Endgame", 181, "Laga/Fiksi?Aksi", 8.4)
+    film3 = Film("3", "Agak Laen", 119, "Komedi", 9.8)
+    film4 = Film("4", "Doctor Strange In The Multiverse Of Madness", 126, "Fantasi/Horor", 6.9)
 
     bioskop.tambah_film(film1)
     bioskop.tambah_film(film2)
     bioskop.tambah_film(film3)
+    bioskop.tambah_film(film4)
 
     while True:
         os.system("cls")

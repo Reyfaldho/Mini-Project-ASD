@@ -1,7 +1,5 @@
 import os
-
 os.system("cls")
-
 class Film:
     def __init__(self, id, judul, durasi, genre, rating):
         self.id = id

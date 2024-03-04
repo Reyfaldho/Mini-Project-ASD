@@ -15,22 +15,22 @@ class Bioskop:
     def __init__(self):
         self.head = None
 
-    def tambah_di_awal(self, film):
-        film.next = self.head
-        self.head = film
+    def tambah_di_awal(self, new_node):
+        new_node.next = self.head
+        self.head = new_node
 
-    def tambah_di_akhir(self, film):
+    def tambah_di_akhir(self, new_node):
         if not self.head:
-            self.head = film
+            self.head = new_node
             return
         current = self.head
         while current.next:
             current = current.next
-        current.next = film
+        current.next = new_node
 
-    def tambah_di_tengah(self, film, posisi):
+    def tambah_di_tengah(self, new_node, posisi):
         if posisi == 0:
-            self.tambah_di_awal(film)
+            self.tambah_di_awal(new_node)
             return
         current = self.head
         for _ in range(posisi - 1):
@@ -38,8 +38,8 @@ class Bioskop:
                 print("Posisi melebihi panjang Linked List")
                 return
             current = current.next
-        film.next = current.next
-        current.next = film
+        new_node.next = current.next
+        current.next = new_node
 
     def hapus_di_awal(self):
         if not self.head:
@@ -76,20 +76,20 @@ class Bioskop:
             return
         current.next = current.next.next
 
-    def update_film(self, id_film, update_choice, new_value):
+    def update_film(self, id_film, pilihan, value_baru):
         current = self.head
         while current:
             if current.id == id_film:
-                if update_choice == "1":
-                    current.id = new_value
-                elif update_choice == "2":
-                    current.judul = new_value
-                elif update_choice == "3":
-                    current.durasi = new_value
-                elif update_choice == "4":
-                    current.genre = new_value
-                elif update_choice == "5":
-                    current.rating = new_value
+                if pilihan == "1":
+                    current.id = value_baru
+                elif pilihan == "2":
+                    current.judul = value_baru
+                elif pilihan == "3":
+                    current.durasi = value_baru
+                elif pilihan == "4":
+                    current.genre = value_baru
+                elif pilihan == "5":
+                    current.rating = value_baru
                 print("Film berhasil diupdate")
                 return True
             current = current.next
@@ -108,6 +108,7 @@ class Bioskop:
             print("╚══════════════════════════════════════════════════════╝")
             print()
             current = current.next
+
 
 def main():
     bioskop = Bioskop()
@@ -211,39 +212,37 @@ def main():
                 print("=========================================================")
                 print("                  Pilihan Update Film")
                 print("=========================================================")
-                print("                  1. Update ID")
+                print("                  1. Update ID  ")
                 print("                  2. Update Judul")
                 print("                  3. Update Durasi")
                 print("                  4. Update Genre")
                 print("                  5. Update Rating")
                 print("                  6. Kembali ke menu utama")
                 print("=========================================================")
-                update_choice = input("Pilih opsi update: ")
+                pilihan = input("Pilih Opsi Update : ")
                 
-                if update_choice not in ["1", "2", "3", "4", "5", "6"]:
-                    print("Pilihan tidak valid")
-                elif update_choice == "6":
+                if pilihan == "6":
                     break
                 else:
                     id_film = input("Masukkan ID film yang akan diupdate: ")
                     current = bioskop.head
                     while current:
                         if current.id == id_film:
-                            if update_choice == "1":
-                                new_id = input("Masukkan ID baru: ")
-                                current.id = new_id
-                            elif update_choice == "2":
-                                new_judul = input("Masukkan judul baru: ")
-                                current.judul = new_judul
-                            elif update_choice == "3":
-                                new_durasi = int(input("Masukkan durasi baru: "))
-                                current.durasi = new_durasi
-                            elif update_choice == "4":
-                                new_genre = input("Masukkan genre baru: ")
-                                current.genre = new_genre
-                            elif update_choice == "5":
-                                new_rating = float(input("Masukkan rating baru: "))
-                                current.rating = new_rating
+                            if pilihan == "1":
+                                id_baru = input("Masukkan ID baru: ")
+                                current.id = id_baru
+                            elif pilihan == "2":
+                                judul_baru = input("Masukkan judul baru: ")
+                                current.judul = judul_baru
+                            elif pilihan == "3":
+                                durasi_baru = int(input("Masukkan durasi baru: "))
+                                current.durasi = durasi_baru
+                            elif pilihan == "4":
+                                genre_baru = input("Masukkan genre baru: ")
+                                current.genre = genre_baru
+                            elif pilihan == "5":
+                                rating_baru = float(input("Masukkan rating baru: "))
+                                current.rating = rating_baru
                             print("Film berhasil diupdate")
                             break
                         current = current.next
@@ -254,7 +253,7 @@ def main():
 
         elif pilihan == "5":
             print("===========================================================")
-            print("    Terima kasih telah menggunakan program ini Meledagh.")
+            print("       Terima kasih telah menggunakan program ini. ")
             print("===========================================================")
             break
 

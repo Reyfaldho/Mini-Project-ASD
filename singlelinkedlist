@@ -191,7 +191,7 @@ def main():
                 print("                    1. Hapus di awal")
                 print("                    2. Hapus di tengah")
                 print("                    3. Hapus di akhir")
-                print("                    4. tidak jadi hapus")
+                print("                    4. Kembali Ke Menu Utama")
                 print("=========================================================")
                 
                 Pilihan_hapus = input("Pilih opsi penghapusan: ")

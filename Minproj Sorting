@@ -106,7 +106,6 @@ class Bioskop:
         else:
             return Bioskop.quick_sort(greater, ascending=False) + equal + Bioskop.quick_sort(less, ascending=False)
 
-
     def sort_film(self, attribute, ascending=True):
         film_list = []
         current = self.head
@@ -150,7 +149,6 @@ def main():
     bioskop.tambah_di_akhir(film2)
     bioskop.tambah_di_tengah(film3, posisi=1)
     bioskop.tambah_di_tengah(film4, posisi=2)
-
 
     while True:
         os.system("cls")
@@ -324,7 +322,6 @@ def main():
                     print("==========================")
                     os.system("pause")
 
-
         elif pilihan == "5":
             if not bioskop.head:
                 print("========================================")
@@ -363,7 +360,6 @@ def main():
                         print("   Pilihan tidak valid    ")
                         print("==========================")
                         os.system("pause")
-
 
         elif pilihan == "6":
                     print("===========================================================")

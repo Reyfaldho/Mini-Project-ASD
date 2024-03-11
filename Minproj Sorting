@@ -1,0 +1,387 @@
+import os
+os.system("cls")
+class Film:
+    def __init__(self, id, judul, durasi, genre, rating):
+        self.id = id
+        self.judul = judul
+        self.durasi = durasi
+        self.genre = genre
+        self.rating = rating
+        self.next = None
+
+class Bioskop:
+    def __init__(self):
+        self.head = None
+
+    def tambah_di_awal(self, new_node):
+        new_node.next = self.head
+        self.head = new_node
+
+    def tambah_di_akhir(self, new_node):
+        if not self.head:
+            self.head = new_node
+            return
+        current = self.head
+        while current.next:
+            current = current.next
+        current.next = new_node
+
+    def tambah_di_tengah(self, new_node, posisi):
+        if posisi == 0:
+            self.tambah_di_awal(new_node)
+            return
+        current = self.head
+        for _ in range(posisi - 1):
+            if not current:
+                print("Posisi melebihi panjang Linked List")
+                return
+            current = current.next
+        new_node.next = current.next
+        current.next = new_node
+
+    def hapus_di_awal(self):
+        if not self.head:
+            print("Linked List sudah kosong")
+            return
+        self.head = self.head.next
+
+    def hapus_di_akhir(self):
+        if not self.head:
+            print("Linked List sudah kosong")
+            return
+        if not self.head.next:
+            self.head = None
+            return
+        current = self.head
+        while current.next.next:
+            current = current.next
+        current.next = None
+
+    def hapus_di_tengah(self, posisi):
+        if not self.head:
+            print("Linked List sudah kosong")
+            return
+        if posisi == 0:
+            self.hapus_di_awal()
+            return
+        current = self.head
+        count = 0
+        while current and count < posisi - 1:
+            current = current.next
+            count += 1
+        if not current or not current.next:
+            print("Posisi melebihi panjang Linked List")
+            return
+        current.next = current.next.next
+
+    def update_film(self, id_film, pilihan, value_baru):
+        current = self.head
+        while current:
+            if current.id == id_film:
+                if pilihan == "1":
+                    current.id = value_baru
+                elif pilihan == "2":
+                    current.judul = value_baru
+                elif pilihan == "3":
+                    current.durasi = value_baru
+                elif pilihan == "4":
+                    current.genre = value_baru
+                elif pilihan == "5":
+                    current.rating = value_baru
+                print("Film berhasil diupdate")
+                return True
+            current = current.next
+        print("Film dengan ID tersebut tidak ditemukan")
+        return False
+
+    def quick_sort(arr, ascending=True):
+        if len(arr) <= 1:
+            return arr
+        pivot = arr[len(arr) // 2]
+        less = [x for x in arr if x < pivot]
+        equal = [x for x in arr if x == pivot]
+        greater = [x for x in arr if x > pivot]
+        if ascending:
+            return Bioskop.quick_sort(less) + equal + Bioskop.quick_sort(greater)
+        else:
+            return Bioskop.quick_sort(greater, ascending=False) + equal + Bioskop.quick_sort(less, ascending=False)
+
+
+    def sort_film(self, attribute, ascending=True):
+        film_list = []
+        current = self.head
+        while current:
+            film_list.append(current)
+            current = current.next
+
+        if attribute == "id":
+            film_list.sort(key=lambda x: x.id)
+        elif attribute == "judul":
+            film_list.sort(key=lambda x: x.judul)
+        elif attribute == "durasi":
+            film_list.sort(key=lambda x: x.durasi)
+        elif attribute == "genre":
+            film_list.sort(key=lambda x: x.genre)
+        elif attribute == "rating":
+            film_list.sort(key=lambda x: x.rating)
+        
+        if not ascending:
+            film_list.reverse()
+
+        for film in film_list:
+            print("ID:", film.id, "Judul:", film.judul)
+            print("===============================================================")
+
+    def tampilkan(self):
+        current = self.head
+        while current:
+            print("      ╔══════════════════════════════════════════════════════╗")
+            print("          ID:", current.id)
+            print("           Judul:", current.judul)
+            print("            Durasi:", current.durasi)
+            print("             Genre:", current.genre)
+            print("              Rating:", current.rating)
+            print("      ╚══════════════════════════════════════════════════════╝")
+            print()
+            current = current.next
+
+def main():
+    bioskop = Bioskop()
+    film1 = Film("1", "Spider-Man: No Way Home", 148, "laga/Fiksi/Aksi", 8.2)
+    film2 = Film("2", "Avengers: Endgame", 181, "Laga/Fiksi?Aksi", 8.4)
+    film3 = Film("3", "Agak Laen", 119, "Komedi", 9.8)
+    film4 = Film("4", "Doctor Strange In The Multiverse Of Madness", 126, "Fantasi/Horor", 6.9)
+
+    bioskop.tambah_di_awal(film1)
+    bioskop.tambah_di_akhir(film2)
+    bioskop.tambah_di_tengah(film3, posisi=1)
+    bioskop.tambah_di_tengah(film4, posisi=2)
+
+
+    while True:
+        os.system("cls")
+        print("╭─────────Pilihan Menu─────────╮")
+        print("|    1. Tambah Film            |")
+        print("|    2. Hapus Film             |")
+        print("|    3. Tampilkan Daftar Film  |")
+        print("|    4. Update Film            |")
+        print("|    5. Sorting film           |")
+        print("|    6. Keluar                 |")
+        print("╰──────────────────────────────╯")
+
+        pilihan = input("Masukkan pilihan Anda: ")
+
+        if pilihan == "1":
+            print("=========================================================")
+            id = input("Masukkan ID Film: ")
+            print("=========================================================")
+            judul = input("Masukkan Judul Film: ")
+            print("=========================================================")
+            durasi = int(input("Masukkan Durasi Film : "))
+            print("=========================================================")
+            genre = input("Masukkan Genre Film: ")
+            print("=========================================================")
+            rating = float(input("Masukkan Rating Film : "))
+            print("=========================================================")
+            film_baru = Film(id, judul, durasi, genre, rating)
+
+            while True:
+                os.system("cls")
+                print("Pilih Posisi Tambahan:")
+                print("========================")
+                print("       1. Awal")
+                print("       2. Tengah")
+                print("       3. Akhir")
+                print("========================")
+                pilihan_posisi = input("Pilihan Anda: ")
+
+                if pilihan_posisi == "1":
+                    bioskop.tambah_di_awal(film_baru)
+                    print("===============================================")
+                    print("    Film Berhasil Ditambahkan Kedalam List")
+                    print("===============================================")
+                    os.system("pause")
+                    break
+                elif pilihan_posisi == "2":
+                    posisi = int(input("Masukkan posisi film : "))
+                    bioskop.tambah_di_tengah(film_baru, posisi)
+                    print("===============================================")
+                    print("    Film Berhasil Ditambahkan Kedalam List")
+                    print("===============================================")
+                    os.system("pause")
+                    break
+                elif pilihan_posisi == "3":
+                    bioskop.tambah_di_akhir(film_baru)
+                    print("===============================================")
+                    print("    Film Berhasil Ditambahkan Kedalam List")
+                    print("===============================================")
+                    os.system("pause")
+                    break
+                else:
+                    print("==========================")
+                    print("   Pilihan tidak valid    ")
+                    print("==========================")
+                    os.system("pause")
+
+        elif pilihan == "2":
+            if not bioskop.head:
+                print("========================================")
+                print("         Linked list Tidak Ada          ")
+                print("========================================")
+                os.system("pause")
+            else:
+                while True:
+                    os.system("cls")
+                    print("==========================================================")
+                    print("|                      Pilihan Hapus                     |")
+                    print("==========================================================")
+                    print("|                    1. Hapus di awal                    |")
+                    print("|                    2. Hapus di tengah                  |")
+                    print("|                    3. Hapus di akhir                   |")
+                    print("|                    4. Kembali Ke Menu Utama            |")
+                    print("==========================================================")
+                    
+                    Pilihan_hapus = input("Pilih opsi penghapusan: ")
+                    
+                    if Pilihan_hapus == "1":
+                        bioskop.hapus_di_awal()
+                        print("=============================================")
+                        print("      Film Berhasil Dihapus Dari List")
+                        print("=============================================")
+                        os.system("pause")
+                        break
+                    elif Pilihan_hapus == "2":
+                        posisi = int(input("Masukkan posisi film yang akan dihapus: "))
+                        bioskop.hapus_di_tengah(posisi)
+                        print("=============================================")
+                        print("      Film Berhasil Dihapus Dari List")
+                        print("=============================================")
+                        os.system("pause")
+                        break
+                    elif Pilihan_hapus == "3":
+                        bioskop.hapus_di_akhir()
+                        print("=============================================")
+                        print("      Film Berhasil Dihapus Dari List")
+                        print("=============================================")
+                        os.system("pause")
+                        break
+                    elif Pilihan_hapus == "4":
+                        break
+                    else:
+                        print("===========================")
+                        print("    Pilihan tidak valid    ")
+                        print("===========================")
+                        os.system("pause")
+
+        elif pilihan == "3":
+            print("===================================================================")
+            print("|                      Daftar Film di Bioskop:                    |")
+            print("===================================================================")
+            bioskop.tampilkan()
+            os.system("pause")
+        
+        elif pilihan == "4":
+            while True:
+                os.system("cls")
+                print("==========================================================")
+                print("|                  Pilihan Update Film                   |")
+                print("==========================================================")
+                print("|                  1. Update ID                          |")
+                print("|                  2. Update Judul                       |")
+                print("|                  3. Update Durasi                      |")
+                print("|                  4. Update Genre                       |")
+                print("|                  5. Update Rating                      |")
+                print("|                  6. Kembali ke menu utama              |")
+                print("==========================================================")
+                pilihan_update = input("Pilih Opsi Update : ")
+                if pilihan_update in ["1", "2", "3", "4", "5"]:
+                    id_film = input("Masukkan ID film yang akan diupdate: ")
+                    current = bioskop.head
+                    while current:
+                        if current.id == id_film:
+                            if pilihan_update == "1":
+                                id_baru = input("Masukkan ID baru: ")
+                                current.id = id_baru
+                            elif pilihan_update == "2":
+                                judul_baru = input("Masukkan judul baru: ")
+                                current.judul = judul_baru
+                            elif pilihan_update == "3":
+                                durasi_baru = int(input("Masukkan durasi baru: "))
+                                current.durasi = durasi_baru
+                            elif pilihan_update == "4":
+                                genre_baru = input("Masukkan genre baru: ")
+                                current.genre = genre_baru
+                            elif pilihan_update == "5":
+                                rating_baru = float(input("Masukkan rating baru: "))
+                                current.rating = rating_baru
+                            print("================================================")
+                            print("             Film berhasil diupdate             ")
+                            print("================================================")
+                            break
+                        current = current.next
+                    else:
+                        print("Film dengan ID tersebut tidak ditemukan")
+                    os.system("pause")
+                elif pilihan_update == "6":
+                    break
+                else:
+                    print("==========================")
+                    print("   Pilihan tidak valid    ")
+                    print("==========================")
+                    os.system("pause")
+
+
+        elif pilihan == "5":
+            if not bioskop.head:
+                print("========================================")
+                print("          Daftar Film Tidak Ada         ")
+                print("========================================")
+                os.system("pause")
+            else:
+                while True:
+                    os.system("cls")
+                    print("===========================================================")
+                    print("|                    Pilihan Sorting                      |")
+                    print("===========================================================")
+                    print("|               1. Sorting ID (Ascending)                 |")
+                    print("|               2. Sorting ID (Descending)                |")
+                    print("|               3. Sorting Judul (Ascending)              |")
+                    print("|               4. Sorting Judul (Descending)             |")
+                    print("|               5. Kembali ke menu utama                  |")
+                    print("===========================================================")
+                    pilihan_sorting = input("Pilih Opsi Sorting : ")
+                    
+                    if pilihan_sorting in ["1", "2", "3", "4"]:
+                        ascending = True if int(pilihan_sorting) % 2 != 0 else False
+                        attribute = ""
+                        if pilihan_sorting in ["1", "2"]:
+                            attribute = "id"
+                        elif pilihan_sorting in ["3", "4"]:
+                            attribute = "judul"
+                        bioskop.sort_film(attribute, ascending)
+                        print("                   Film berhasil disorting                     ")
+                        print("===============================================================")
+                        os.system("pause")
+                    elif pilihan_sorting == "5":
+                        break
+                    else:
+                        print("==========================")
+                        print("   Pilihan tidak valid    ")
+                        print("==========================")
+                        os.system("pause")
+
+
+        elif pilihan == "6":
+                    print("===========================================================")
+                    print("|       Terima kasih telah menggunakan program ini.       |")
+                    print("===========================================================")
+                    break
+
+        else:
+            print("=============================================================")
+            print("|    Pilihan tidak valid. Silakan pilih opsi yang sesuai.   |")
+            print("=============================================================")
+            os.system("pause")
+
+if __name__ == "__main__":
+    main()

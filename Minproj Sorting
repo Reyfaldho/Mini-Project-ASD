@@ -118,12 +118,6 @@ class Bioskop:
             film_list.sort(key=lambda x: x.id)
         elif attribute == "judul":
             film_list.sort(key=lambda x: x.judul)
-        elif attribute == "durasi":
-            film_list.sort(key=lambda x: x.durasi)
-        elif attribute == "genre":
-            film_list.sort(key=lambda x: x.genre)
-        elif attribute == "rating":
-            film_list.sort(key=lambda x: x.rating)
         
         if not ascending:
             film_list.reverse()
